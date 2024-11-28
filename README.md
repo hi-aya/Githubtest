@@ -125,6 +125,7 @@ if none of the above just return none
 ```
 
 ## L'extraction des données :
+Lors des discussions, le modèle doit extraire les données de l'interlocuteur afin de les insérer dans la base de données.
 
 ```bash
 FROM llama3.1
