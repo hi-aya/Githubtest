@@ -1,7 +1,7 @@
-# Serveur vocal intéractif 
+# Serveur vocal intéractif :
 Ce système est conçu pour intéragir avec les appels téléphoniques qui vise à contacter un médecin.
 
-## Installation du LLM
+## Installation du LLM :
 Installation des bibliothèques :
 D'abord on s'assure d'avoir accés à un serveur Ollama en cours d'exécution. Il faut qu'il soit correctement configuré.
 
@@ -84,7 +84,7 @@ elif Intent == "cancelling_appointment":
 ```
 
 ### Configuration de cet LLM :
-Afin de personnaliser le serveur, on regroupe l'ensemble des instructions d'une manière structurée, cette étape est cruciale pour le rendre capable de répondre spécifiquements aux questions.
+Afin de personnaliser le serveur, on regroupe l'ensemble des instructions d'une manière structurée, cette étape est cruciale pour le rendre capable de répondre spécifiquement aux questions.
 
 ```bash
 FROM llama3.1
@@ -106,5 +106,38 @@ Once you have all the required information, ask the user to confirm if everythin
 If the user appears to have the wrong office number or mentions an incorrect department, kindly inform them that they are in the wrong place.
 
 Your responses should be short, friendly, and professional. Use clear and simple language to avoid confusion.
+"""
+```
+
+## La reconnaissance des intentions :
+
+```bash
+FROM llama3.1
+PARAMETER temperature 0.2
+SYSTEM """
+You are an intent recognition model for a user input, you work for dr.simo's cabine .
+if the intent is scheduling an appointment return scheduling_appointment
+if the intent is rescheduling an appointment return rescheduling_appointment
+if the intent is cancelling an appointment return cancelling_appointment
+if the the user called the wrong cabine return wrong_call
+if none of the above just return none
+"""
+```
+
+## L'extraction des données :
+
+```bash
+FROM llama3.1
+PARAMETER temperature 0.2
+SYSTEM """
+You are an entity extraction model.
+Your job is to extrect only the information needed by user, do not add any other information.
+for example:my name is adam and i need an appointment next friday at 10 am , my phone number is 03834893 and ID ba7392
+if the user asked for name the result should be : adam
+if the user asked for date the result should be : friday
+if the user asked for time the result should be : 10 am
+if the user asked for phone number the result should be : 03834893
+if the user asked for id the result should be : ba7392
+
 """
 ```
