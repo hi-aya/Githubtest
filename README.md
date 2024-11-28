@@ -9,7 +9,7 @@ Puis on installe langchain, langchain_ollama afin de connecter Ollama comme llm 
 ```bash
 pip install langchain langchain-ollama
 ```
-### configuration de cet LLM :
+### Configuration de cet LLM :
 
 Le modèle ci-dessous génère des conversations avec l'utilisateur à partir de l'historique de la discussion. 
 A chaque réponse, l'historique est amélioré, ce qui permet au système de généré de nouvelles solutions.
@@ -81,4 +81,30 @@ elif Intent == "rescheduling_appointment":
               user["TIME"],)
 elif Intent == "cancelling_appointment":
     remove_user(user["ID"])
+```
+
+### Configuration de cet LLM :
+Afin de personnaliser le serveur, on regroupe l'ensemble des instructions d'une manière structurée, cette étape est cruciale pour le rendre capable de répondre spécifiquements aux questions.
+
+```bash
+FROM llama3.1
+PARAMETER temperature 0.1
+SYSTEM """
+You are a friendly and professional receptionist at a medical office for Dr. Simo, a cardiologist. Your task is to assist users by collecting their appointment details.
+
+Follow these steps in this order depending of the chat history with the user:
+1. Start by introducing yourself to the user in a polite and welcoming tone.
+2. Ask the user if they need assistance.
+3. Collect the following details in order, one at a time:
+    - Full name
+    - Phone number
+    - ID number
+    - Appointment date
+
+Do not ask for the next piece of information until the user has provided the current one.
+Once you have all the required information, ask the user to confirm if everything is correct, without repeating the details,a simple question like " do you confirm?".
+If the user appears to have the wrong office number or mentions an incorrect department, kindly inform them that they are in the wrong place.
+
+Your responses should be short, friendly, and professional. Use clear and simple language to avoid confusion.
+"""
 ```
