@@ -85,7 +85,7 @@ elif Intent == "cancelling_appointment":
     remove_user(user["ID"])
 ```
 
-### Configuration de cet LLM :
+
 Afin de personnaliser le serveur, on regroupe l'ensemble des instructions d'une manière structurée, cette étape est cruciale pour le rendre capable de répondre spécifiquement aux questions.
 
 ```bash
