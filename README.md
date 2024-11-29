@@ -12,7 +12,9 @@ pip install langchain langchain-ollama
 ### Configuration de cet LLM :
 
 Le modèle ci-dessous génère des conversations avec l'utilisateur à partir de l'historique de la discussion. 
+
 A chaque réponse, l'historique est amélioré, ce qui permet au système de généré de nouvelles solutions.
+
 Au cours de la discussion, notre modèle doit etre capable de détecter l'intention de l'interlocuteur et savoir si il veut fixer un rendez-vous ou changer sa date.
 
 ```bash
