@@ -24,86 +24,40 @@ DataBase : Fichier personnalisé pour gérer les opérations sur la base de donn
 ```bash
 pip install streamlit langchain pyttsx3 SpeechRecognition ollama
 ```
-### Configuration de cet LLM :
+## Fonctionnement :
 
-Le modèle ci-dessous génère des conversations avec l'utilisateur à partir de l'historique de la discussion. 
+Le modèle ci-dessous génère des conversations avec l'utilisateur sans avoir recours à l'historique de la discussion. 
 
-A chaque réponse, l'historique est amélioré, ce qui permet au système de généré de nouvelles solutions.
-
-Au cours de la discussion, notre modèle doit etre capable de détecter l'intention de l'interlocuteur et savoir si il veut fixer un rendez-vous ou changer sa date.
+Lancez l'application Streamlit en exécutant la commande suivante dans votre terminal :
 
 ```bash
-from langchain_ollama import OllamaLLM
-from langchain_core.prompts import ChatPromptTemplate
-from db_manage import create_database,add_user,remove_user,edit_user
-
-template="""
-the chat history is {context}
-User: {question}
-"""
-
-Info_extract=OllamaLLM(model="extract")
-intent_recognition= OllamaLLM(model="intent")
-model=OllamaLLM(model="test")
-
-lista=["Full_name","ID","phone number","DATE","TIME"]
-
-user={"Full_name":"",
-       "ID":"",
-       "phone_number":"",
-       "DATE":"",
-       "TIME":""
-}
-
-
-
-prompt=ChatPromptTemplate.from_template(template)
-chain = prompt | model
-
-
-History=""
-context=""
-print("Hello there,i am your AI assistant for today.")
-while True:
-    user_input=input("you: ")
-    if user_input.lower() in ["exit","bye"]:
-        break
-    History+=user_input+"\n"
-    result=chain.invoke({"context":context,"question":user_input})
-    print("Bot: ",result)
-    context += f"\nUser: {user_input}\nAI: {result}"
-
-
-
-Intent=intent_recognition(History)
-
-for data in lista:
-    extracted_data=Info_extract(f"return the {data} from the following {History}")
-    print(data,"  -->  ",extracted_data)
-    user[data]=extracted_data
-create_database()
-print(f"User's Info : {user}\nUser's Intent : {Intent}\nUser's chat history: {History}")
-
-if Intent == "scheduling_appointment":
-    add_user(user["Full_name"],
-             user["ID"],
-             user["phone_number"],
-             user["DATE"],
-             user["TIME"])
-elif Intent == "rescheduling_appointment":
-    edit_user(user["ID"],
-              user["Full_name"],
-              user["phone_number"],
-              user["DATE"],
-              user["TIME"],)
-elif Intent == "cancelling_appointment":
-    remove_user(user["ID"])
-```
-
-
-Afin de personnaliser le serveur, on regroupe l'ensemble des instructions d'une manière structurée, cette étape est cruciale pour le rendre capable de répondre spécifiquement aux questions.
-
+streamlit run app.py
 ```bash
+Interaction vocale : Lorsque vous cliquez sur le bouton "Record Audio", l'application commence à écouter votre voix. Vous pouvez alors donner des instructions comme "schedule appointment", "update appointment" ou "cancel appointment". L'assistant reconnaît ces commandes et agit en conséquence.
+
+Reconnaissance d'intention et extraction des informations : Une fois l'instruction reconnue, l'assistant utilise le modèle OllamaLLM pour identifier -l'intention de l'utilisateur et extraire les informations pertinentes (nom, ID, téléphone, date, heure).
+
+Gestion des rendez-vous : Selon l'intention identifiée, l'assistant va :
+
+Planifier un rendez-vous : Si l'intention est liée à la prise d'un nouveau rendez-vous.
+Mettre à jour un rendez-vous : Si l'intention est liée à une mise à jour.
+Annuler un rendez-vous : Si l'intention est liée à l'annulation.
+Base de données : Les informations sur les utilisateurs et leurs rendez-vous sont stockées dans la base de données à l'aide des fonctions create_db, add_user, update_user, et delete_user.
+
+Synthèse vocale : Après chaque interaction, l'assistant répond en utilisant la synthèse vocale avec la voix configurée dans le code (par défaut, la voix féminine).
+
+Fonctionnalités supplémentaires
+Historique des messages : L'historique des conversations est enregistré et affiché dans l'interface Streamlit. Vous pouvez voir toutes les interactions passées avec l'assistant.
+Mise en pause de la conversation : L'utilisateur peut quitter la conversation à tout moment en disant "quit", "exit", "bye" ou "goodbye", ce qui met fin à la session active.
+Exemple de dialogue
+Voici un exemple de conversation avec l'assistant :
+
+L'utilisateur dit : "Schedule an appointment for tomorrow at 3 PM."
+L'assistant reconnaît l'intention et extrait les informations pertinentes (nom, téléphone, date, heure).
+L'assistant répond : "Your appointment is scheduled for tomorrow at 3 PM." et ajoute ces informations à la base de données.
+
+
+
 FROM llama3.1
 PARAMETER temperature 0.1
 SYSTEM """
