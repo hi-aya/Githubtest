@@ -12,13 +12,17 @@ Reconnaissance d'intention : L'assistant peut identifier si l'utilisateur souhai
 
 Gestion des données utilisateurs : Les informations recueillies pendant l'interaction (nom, ID, téléphone, date et heure du rendez-vous) sont stockées et gérées dans une base de données.
 
-## Installation du LLM :
-Installation des bibliothèques :
+## Installation des dépendances:
 D'abord on s'assure d'avoir accés à un serveur Ollama en cours d'exécution. Il faut qu'il soit correctement configuré.
 
-Puis on installe langchain, langchain_ollama afin de connecter Ollama comme llm :
+Streamlit : Framework pour la création d'applications web interactives.
+Langchain : Bibliothèque utilisée pour la gestion des modèles de langage (LLM).
+SpeechRecognition : Bibliothèque pour la reconnaissance vocale.
+pyttsx3 : Bibliothèque pour la synthèse vocale hors ligne.
+DataBase : Fichier personnalisé pour gérer les opérations sur la base de données.
+
 ```bash
-pip install langchain langchain-ollama
+pip install streamlit langchain pyttsx3 SpeechRecognition ollama
 ```
 ### Configuration de cet LLM :
 
