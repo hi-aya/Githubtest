@@ -32,32 +32,24 @@ Lancez l'application Streamlit en exécutant la commande suivante dans votre ter
 
 ```bash
 streamlit run app.py
-```bash
-Interaction vocale : Lorsque vous cliquez sur le bouton "Record Audio", l'application commence à écouter votre voix. Vous pouvez alors donner des instructions comme "schedule appointment", "update appointment" ou "cancel appointment". L'assistant reconnaît ces commandes et agit en conséquence.
+```
+
+Interaction vocale : Lorsque vous cliquez sur le bouton "Record Audio", l'application reçoit votre voix. Vous pouvez alors exprimer vos besoins.L'assistant reconnaît vos commandes et agit en conséquence.
 
 Reconnaissance d'intention et extraction des informations : Une fois l'instruction reconnue, l'assistant utilise le modèle OllamaLLM pour identifier -l'intention de l'utilisateur et extraire les informations pertinentes (nom, ID, téléphone, date, heure).
 
 Gestion des rendez-vous : Selon l'intention identifiée, l'assistant va :
 
-Planifier un rendez-vous : Si l'intention est liée à la prise d'un nouveau rendez-vous.
-Mettre à jour un rendez-vous : Si l'intention est liée à une mise à jour.
-Annuler un rendez-vous : Si l'intention est liée à l'annulation.
+- Planifier un rendez-vous : Si l'intention est liée à la prise d'un nouveau rendez-vous.
+- Mettre à jour un rendez-vous : Si l'intention est liée à une mise à jour.
+- Annuler un rendez-vous : Si l'intention est liée à l'annulation.
+
 Base de données : Les informations sur les utilisateurs et leurs rendez-vous sont stockées dans la base de données à l'aide des fonctions create_db, add_user, update_user, et delete_user.
 
-Synthèse vocale : Après chaque interaction, l'assistant répond en utilisant la synthèse vocale avec la voix configurée dans le code (par défaut, la voix féminine).
-
-Fonctionnalités supplémentaires
-Historique des messages : L'historique des conversations est enregistré et affiché dans l'interface Streamlit. Vous pouvez voir toutes les interactions passées avec l'assistant.
-Mise en pause de la conversation : L'utilisateur peut quitter la conversation à tout moment en disant "quit", "exit", "bye" ou "goodbye", ce qui met fin à la session active.
-Exemple de dialogue
-Voici un exemple de conversation avec l'assistant :
-
-L'utilisateur dit : "Schedule an appointment for tomorrow at 3 PM."
-L'assistant reconnaît l'intention et extrait les informations pertinentes (nom, téléphone, date, heure).
-L'assistant répond : "Your appointment is scheduled for tomorrow at 3 PM." et ajoute ces informations à la base de données.
+Synthèse vocale : Après chaque interaction, l'assistant répond en utilisant la synthèse vocale.
 
 
-
+```bash
 FROM llama3.1
 PARAMETER temperature 0.1
 SYSTEM """
