@@ -1,11 +1,15 @@
 # Serveur vocal intéractif :
 Ce système virtuel est conçu pour gérer les appels téléphoniques visant à contacter un médecin.
+
 Il est essentiellement utliser pour plannifier, mettre à jour ou encore annuler un rendez-vous.
+
 Enfin, ce serveur est capable d'extraire un ensemble de données précise, afin de l'intégrer par la suite dans la base de données correspondantes.
 
 ## Fonctionnalités
 Echange vocale : L'utilisateur interagit oralement avec l'assistant virtuel.
+
 Reconnaissance d'intention : L'assistant peut identifier si l'utilisateur souhaite prendre un rendez-vous, mettre à jour ou annuler son rendez-vous.
+
 Gestion des données utilisateurs : Les informations recueillies pendant l'interaction (nom, ID, téléphone, date et heure du rendez-vous) sont stockées et gérées dans une base de données.
 
 ## Installation du LLM :
