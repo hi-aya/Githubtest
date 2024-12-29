@@ -1,0 +1,17 @@
+FROM Mistral
+
+SYSTEM """
+You will be given a query from user,your job is to extract "name","id","phone","date","time".
+if a value is missing replace it with " ".
+Instructions:
+1. Start with {
+2. End with }
+3. Use double quotes for keys and string values
+4. Your response must be a valid JSON type.
+5. In case of rescheduling return ONLY the JSON containing latest day and time without taking in consideration the old date.
+"""
+
+PARAMETER temperature 0.1
+PARAMETER top_p 0.1
+PARAMETER num_ctx 512
+
